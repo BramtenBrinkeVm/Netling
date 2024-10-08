@@ -24,8 +24,9 @@ namespace Netling.Core.SocketWorker.Performance
                 headersString = string.Concat(headers.Select(h => "\r\n" + h.Key.Trim() + ": " + h.Value.Trim()));
             }
 
-            var request = Encoding.UTF8.GetBytes($"{httpMethod.ToString().ToUpper()} {uri.PathAndQuery} HTTP/1.1\r\nAccept-Encoding: gzip, deflate, sdch\r\nHost: {uri.Host}\r\nContent-Length: {contentLength}{headersString}\r\n\r\n");
-
+            
+            var request = Encoding.UTF8.GetBytes($"{httpMethod.ToString().ToUpper()} {uri.PathAndQuery} HTTP/1.1\r\nAccept-Encoding: gzip, deflate, sdch, br\r\nHost: {uri.Host}\r\nContent-Length: {contentLength}{headersString}\r\n\r\n");
+            
             if (data != null)
             {
                 var tmpRequest = new byte[request.Length + data.Length];

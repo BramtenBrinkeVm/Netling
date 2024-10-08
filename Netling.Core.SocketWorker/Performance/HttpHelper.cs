@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Text;
 using Netling.Core.SocketWorker.Extensions;
 
 namespace Netling.Core.SocketWorker.Performance

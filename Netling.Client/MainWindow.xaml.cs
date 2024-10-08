@@ -10,6 +10,7 @@ using System.Windows.Input;
 using Netling.Core;
 using Netling.Core.Models;
 using Netling.Core.SocketWorker;
+using Netling.Core.SocketWorker.Performance;
 
 namespace Netling.Client
 {
@@ -127,7 +128,23 @@ namespace Netling.Client
                 StatusProgressbar.Value = 0;
                 StatusProgressbar.Visibility = Visibility.Visible;
 
-                var worker = new Worker(new SocketWorkerJob(uri));
+                var payload = Body.Text;
+                if (string.IsNullOrWhiteSpace(payload))
+                {
+                    payload = null;
+                }
+
+                var methodContent = (string)((ComboBoxItem)Method.SelectedItem).Content;
+                var method = methodContent switch
+                {
+                    "GET" => HttpMethod.Get,
+                    "POST" => HttpMethod.Post,
+                    "PUT" => HttpMethod.Put,
+                    "DELETE" => HttpMethod.Delete,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
+
+                var worker = new Worker(new SocketWorkerJob(uri, method, payload));
 
                 if (count.HasValue)
                 {
